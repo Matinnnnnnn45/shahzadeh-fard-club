@@ -1,21 +1,10 @@
-// =============================================
-// Firebase Configuration
-// =============================================
-// ⚠️ این فایل را با اطلاعات پروژه Firebase خودتان جایگزین کنید
-// برای گرفتن این اطلاعات:
-// 1. به https://console.firebase.google.com بروید
-// 2. یک پروژه جدید بسازید یا پروژه موجود را انتخاب کنید
-// 3. از بخش Project Settings > General > Your apps > Web app
-//    کد پیکربندی را کپی کنید
-// =============================================
-
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCJ5HZ-fBCXlOsJ6R_N9lJpOAn3auyress",
+    authDomain: "karate-project-140c0.firebaseapp.com",
+    projectId: "karate-project-140c0",
+    storageBucket: "karate-project-140c0.firebasestorage.app",
+    messagingSenderId: "378984137973",
+    appId: "1:378984137973:web:d1010e3f5928d17cb8b1bc"
 };
 
 // Initialize Firebase
