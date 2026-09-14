@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         menuToggle.classList.toggle('active');
     });
 
-    // Close mobile menu when clicking a link
     document.querySelectorAll('.nav-links a').forEach(function(link) {
         link.addEventListener('click', function() {
             navLinks.classList.remove('active');
@@ -80,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 16);
     }
 
-    // Intersection Observer for counters
     const counterObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) {
@@ -95,37 +93,39 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===== Fade-in Animation =====
-    const fadeElements = document.querySelectorAll('.about-content, .about-image, .member-card, .news-card, .contact-info, .contact-form-wrapper');
+    function setupFadeIn() {
+        var fadeElements = document.querySelectorAll('.about-content, .about-image, .member-card, .news-card, .contact-info, .contact-form-wrapper');
 
-    fadeElements.forEach(function(el) {
-        el.classList.add('fade-in');
-    });
-
-    const fadeObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                fadeObserver.unobserve(entry.target);
-            }
+        fadeElements.forEach(function(el) {
+            el.classList.add('fade-in');
         });
-    }, { threshold: 0.1 });
 
-    fadeElements.forEach(function(el) {
-        fadeObserver.observe(el);
-    });
+        var fadeObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    fadeObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(function(el) {
+            fadeObserver.observe(el);
+        });
+    }
 
     // ===== Firebase: Membership Form =====
-    const membershipForm = document.getElementById('membershipForm');
-    const formMessage = document.getElementById('formMessage');
+    var membershipForm = document.getElementById('membershipForm');
+    var formMessage = document.getElementById('formMessage');
 
-    membershipForm.addEventListener('submit', async function(e) {
+    membershipForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        const submitBtn = membershipForm.querySelector('button[type="submit"]');
+        var submitBtn = membershipForm.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
 
-        const memberData = {
+        var memberData = {
             fullName: document.getElementById('fullName').value.trim(),
             phone: document.getElementById('phone').value.trim(),
             age: parseInt(document.getElementById('age').value),
@@ -136,145 +136,130 @@ document.addEventListener('DOMContentLoaded', function() {
             status: 'pending'
         };
 
-        try {
-            await db.collection('members').add(memberData);
-
-            formMessage.textContent = 'درخواست شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت.';
-            formMessage.className = 'form-message success';
-            membershipForm.reset();
-
-        } catch (error) {
-            console.error('Error adding member:', error);
-            formMessage.textContent = 'خطایی رخ داد. لطفاً دوباره تلاش کنید.';
-            formMessage.className = 'form-message error';
-        }
-
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ارسال درخواست عضویت';
-
-        setTimeout(function() {
-            formMessage.className = 'form-message';
-        }, 5000);
+        db.collection('members').add(memberData)
+            .then(function() {
+                formMessage.textContent = 'درخواست شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت.';
+                formMessage.className = 'form-message success';
+                membershipForm.reset();
+            })
+            .catch(function(error) {
+                console.error('Error adding member:', error);
+                formMessage.textContent = 'خطایی رخ داد. لطفاً دوباره تلاش کنید.';
+                formMessage.className = 'form-message error';
+            })
+            .finally(function() {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ارسال درخواست عضویت';
+                setTimeout(function() {
+                    formMessage.className = 'form-message';
+                }, 5000);
+            });
     });
 
     // ===== Firebase: Load News =====
-    async function loadNews() {
-        const newsGrid = document.getElementById('newsGrid');
-        try {
-            const snapshot = await db.collection('news')
-                .orderBy('date', 'desc')
-                .limit(6)
-                .get();
+    function loadNews() {
+        var newsGrid = document.getElementById('newsGrid');
+        var defaultNewsHTML = newsGrid.innerHTML;
 
-            if (!snapshot.empty) {
-                newsGrid.innerHTML = '';
-                snapshot.forEach(function(doc) {
-                    const news = doc.data();
-                    const newsCard = createNewsCard(news);
-                    newsGrid.appendChild(newsCard);
-                });
-            }
-        } catch (error) {
-            console.log('Using default news content');
-        }
-    }
+        db.collection('news').get()
+            .then(function(snapshot) {
+                if (!snapshot.empty) {
+                    newsGrid.innerHTML = '';
+                    snapshot.forEach(function(doc) {
+                        var news = doc.data();
+                        var card = document.createElement('div');
+                        card.className = 'news-card fade-in visible';
 
-    function createNewsCard(news) {
-        const card = document.createElement('div');
-        card.className = 'news-card fade-in visible';
+                        var icons = ['fa-trophy', 'fa-graduation-cap', 'fa-calendar-alt', 'fa-star', 'fa-medal'];
+                        var randomIcon = icons[Math.floor(Math.random() * icons.length)];
 
-        const icons = ['fa-trophy', 'fa-graduation-cap', 'fa-calendar-alt', 'fa-star', 'fa-medal'];
-        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-
-        card.innerHTML = `
-            <div class="news-image">
-                <div class="news-placeholder"><i class="fas ${news.icon || randomIcon}"></i></div>
-            </div>
-            <div class="news-content">
-                <span class="news-date">${news.date || ''}</span>
-                <h4>${news.title || ''}</h4>
-                <p>${news.description || ''}</p>
-            </div>
-        `;
-        return card;
+                        card.innerHTML =
+                            '<div class="news-image">' +
+                                '<div class="news-placeholder"><i class="fas ' + (news.icon || randomIcon) + '"></i></div>' +
+                            '</div>' +
+                            '<div class="news-content">' +
+                                '<span class="news-date">' + (news.date || '') + '</span>' +
+                                '<h4>' + (news.title || '') + '</h4>' +
+                                '<p>' + (news.description || '') + '</p>' +
+                            '</div>';
+                        newsGrid.appendChild(card);
+                    });
+                }
+            })
+            .catch(function(error) {
+                console.error('Error loading news:', error);
+            });
     }
 
     // ===== Firebase: Load Schedule =====
-    async function loadSchedule() {
-        const scheduleBody = document.getElementById('scheduleBody');
-        try {
-            const snapshot = await db.collection('schedule')
-                .orderBy('order')
-                .get();
+    function loadSchedule() {
+        var scheduleBody = document.getElementById('scheduleBody');
 
-            if (!snapshot.empty) {
-                scheduleBody.innerHTML = '';
-                snapshot.forEach(function(doc) {
-                    const item = doc.data();
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${item.day || ''}</td>
-                        <td>${item.time || ''}</td>
-                        <td>${item.group || ''}</td>
-                        <td>${item.coach || ''}</td>
-                        <td>${item.level || ''}</td>
-                    `;
-                    scheduleBody.appendChild(row);
-                });
-            }
-        } catch (error) {
-            console.log('Using default schedule content');
-        }
+        db.collection('schedule').get()
+            .then(function(snapshot) {
+                if (!snapshot.empty) {
+                    scheduleBody.innerHTML = '';
+                    snapshot.forEach(function(doc) {
+                        var item = doc.data();
+                        var row = document.createElement('tr');
+                        row.innerHTML =
+                            '<td>' + (item.day || '') + '</td>' +
+                            '<td>' + (item.time || '') + '</td>' +
+                            '<td>' + (item.group || '') + '</td>' +
+                            '<td>' + (item.coach || '') + '</td>' +
+                            '<td>' + (item.level || '') + '</td>';
+                        scheduleBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(function(error) {
+                console.error('Error loading schedule:', error);
+            });
     }
 
     // ===== Firebase: Load Members =====
-    async function loadMembers() {
-        const membersGrid = document.getElementById('membersGrid');
-        try {
-            const snapshot = await db.collection('coaches')
-                .orderBy('order')
-                .get();
+    function loadMembers() {
+        var membersGrid = document.getElementById('membersGrid');
 
-            if (!snapshot.empty) {
-                membersGrid.innerHTML = '';
-                snapshot.forEach(function(doc) {
-                    const member = doc.data();
-                    const card = createMemberCard(member);
-                    membersGrid.appendChild(card);
-                });
-            }
-        } catch (error) {
-            console.log('Using default members content');
-        }
+        db.collection('coaches').get()
+            .then(function(snapshot) {
+                if (!snapshot.empty) {
+                    membersGrid.innerHTML = '';
+                    snapshot.forEach(function(doc) {
+                        var member = doc.data();
+                        var card = document.createElement('div');
+                        var isFeatured = member.featured ? ' featured' : '';
+                        card.className = 'member-card fade-in visible' + isFeatured;
+
+                        card.innerHTML =
+                            '<div class="member-avatar">' +
+                                '<i class="fas ' + (member.icon || 'fa-user') + '"></i>' +
+                            '</div>' +
+                            '<div class="member-info">' +
+                                '<h4>' + (member.name || '') + '</h4>' +
+                                '<span class="member-role">' + (member.role || '') + '</span>' +
+                                '<span class="member-belt">' + (member.belt || '') + '</span>' +
+                            '</div>';
+                        membersGrid.appendChild(card);
+                    });
+                }
+            })
+            .catch(function(error) {
+                console.error('Error loading members:', error);
+            });
     }
 
-    function createMemberCard(member) {
-        const card = document.createElement('div');
-        card.className = 'member-card fade-in visible' + (member.featured ? ' featured' : '');
-
-        card.innerHTML = `
-            <div class="member-avatar">
-                <i class="fas ${member.icon || 'fa-user'}"></i>
-            </div>
-            <div class="member-info">
-                <h4>${member.name || ''}</h4>
-                <span class="member-role">${member.role || ''}</span>
-                <span class="member-belt">${member.belt || ''}</span>
-            </div>
-        `;
-        return card;
-    }
-
-    // Load data from Firebase
+    // ===== Init =====
     loadNews();
     loadSchedule();
     loadMembers();
+    setupFadeIn();
 
-    // ===== Smooth scroll for all anchor links =====
+    // ===== Smooth scroll =====
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            var target = document.querySelector(this.getAttribute('href'));
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
