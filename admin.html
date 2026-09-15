@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت | شاهزاده فرد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-logo"><i class="fas fa-fist-raised"></i></span>
+                <h2>پنل مدیریت</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-tab="dashboard"><i class="fas fa-home"></i> داشبورد</a>
+                <a href="#" class="sidebar-link" data-tab="news"><i class="fas fa-newspaper"></i> اخبار</a>
+                <a href="#" class="sidebar-link" data-tab="gallery"><i class="fas fa-images"></i> گالری</a>
+                <a href="#" class="sidebar-link" data-tab="members"><i class="fas fa-users"></i> درخواست‌ها</a>
+                <a href="#" class="sidebar-link" data-tab="settings"><i class="fas fa-cog"></i> تنظیمات</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> خروج</button>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main">
+            <!-- Login -->
+            <div class="login-box" id="loginBox">
+                <div class="login-card">
+                    <div class="login-icon"><i class="fas fa-lock"></i></div>
+                    <h2>ورود به پنل مدیریت</h2>
+                    <form id="loginForm">
+                        <div class="form-field"><input type="email" id="loginEmail" placeholder="ایمیل" required></div>
+                        <div class="form-field"><input type="password" id="loginPass" placeholder="رمز عبور" required></div>
+                        <button type="submit" class="btn btn-gold btn-full"><i class="fas fa-sign-in-alt"></i> ورود</button>
+                    </form>
+                    <div id="loginMsg" class="msg"></div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard" id="dashboard" style="display:none">
+                <div class="dash-header">
+                    <h1>داشبورد</h1>
+                    <p>خوش آمدید</p>
+                </div>
+
+                <!-- Dashboard Tab -->
+                <div class="tab-content active" id="tab-dashboard">
+                    <div class="stats-row">
+                        <div class="stat-box"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><span class="stat-num" id="memberCount">۰</span><span class="stat-lbl">درخواست عضویت</span></div></div>
+                        <div class="stat-box"><div class="stat-icon"><i class="fas fa-newspaper"></i></div><div class="stat-info"><span class="stat-num" id="newsCount">۰</span><span class="stat-lbl">اخبار</span></div></div>
+                        <div class="stat-box"><div class="stat-icon"><i class="fas fa-images"></i></div><div class="stat-info"><span class="stat-num" id="galleryCount">۰</span><span class="stat-lbl">تصویر</span></div></div>
+                    </div>
+                </div>
+
+                <!-- News Tab -->
+                <div class="tab-content" id="tab-news">
+                    <div class="section-header">
+                        <h2>مدیریت اخبار</h2>
+                        <button class="btn btn-gold" id="addNewsBtn"><i class="fas fa-plus"></i> خبر جدید</button>
+                    </div>
+                    <div class="form-card" id="newsFormCard" style="display:none">
+                        <h3>افزودن خبر</h3>
+                        <div class="form-field"><input type="text" id="newsTitle" placeholder="عنوان خبر"></div>
+                        <div class="form-field"><textarea id="newsDesc" placeholder="متن خبر" rows="3"></textarea></div>
+                        <div class="form-row">
+                            <div class="form-field"><input type="text" id="newsDate" placeholder="تاریخ"></div>
+                            <div class="form-field"><input type="text" id="newsIcon" placeholder="آیکون (fa-trophy)"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-gold" id="saveNewsBtn"><i class="fas fa-save"></i> ذخیره</button>
+                            <button class="btn btn-outline" id="cancelNewsBtn">انصراف</button>
+                        </div>
+                    </div>
+                    <div class="list" id="newsList"></div>
+                </div>
+
+                <!-- Gallery Tab -->
+                <div class="tab-content" id="tab-gallery">
+                    <div class="section-header">
+                        <h2>مدیریت گالری</h2>
+                        <button class="btn btn-gold" id="addGalleryBtn"><i class="fas fa-plus"></i> تصویر جدید</button>
+                    </div>
+                    <div class="form-card" id="galleryFormCard" style="display:none">
+                        <h3>افزودن تصویر</h3>
+                        <div class="form-field"><input type="text" id="galleryTitle" placeholder="عنوان تصویر"></div>
+                        <div class="form-field"><input type="text" id="galleryUrl" placeholder="لینک تصویر (URL)"></div>
+                        <div class="form-field">
+                            <select id="galleryCategory">
+                                <option value="training">تمرینات</option>
+                                <option value="competition">مسابقات</option>
+                                <option value="achievement">افتخارات</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-gold" id="saveGalleryBtn"><i class="fas fa-save"></i> ذخیره</button>
+                            <button class="btn btn-outline" id="cancelGalleryBtn">انصراف</button>
+                        </div>
+                    </div>
+                    <div class="list" id="galleryList"></div>
+                </div>
+
+                <!-- Members Tab -->
+                <div class="tab-content" id="tab-members">
+                    <div class="section-header">
+                        <h2>درخواست‌های عضویت</h2>
+                    </div>
+                    <div class="list" id="membersList"></div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div class="tab-content" id="tab-settings">
+                    <div class="section-header">
+                        <h2>تنظیمات سایت</h2>
+                    </div>
+                    <div class="form-card">
+                        <h3>اطلاعات سایت</h3>
+                        <div class="form-field"><label>عنوان سایت</label><input type="text" id="setHeroTitle" placeholder="عنوان هیرو"></div>
+                        <div class="form-field"><label>زیرعنوان</label><input type="text" id="setHeroBadge" placeholder="KYOKUSHIN MATSUSHIMA"></div>
+                        <div class="form-field"><label>توضیحات</label><input type="text" id="setHeroDesc" placeholder="توضیحات هیرو"></div>
+                        <div class="form-field"><label>لینک تصویر استاد</label><input type="text" id="setMasterPhoto" placeholder="URL تصویر"></div>
+                        <div class="form-field"><label>لینک تصویر باشگاه</label><input type="text" id="setAboutImage" placeholder="URL تصویر"></div>
+                        <div class="form-field"><label>لینک تصویر هیرو</label><input type="text" id="setHeroImage" placeholder="URL تصویر"></div>
+                        <button class="btn btn-gold" id="saveSettingsBtn"><i class="fas fa-save"></i> ذخیره تنظیمات</button>
+                        <div id="settingsMsg" class="msg"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

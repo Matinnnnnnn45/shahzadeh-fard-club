@@ -2,79 +2,129 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== LOADER =====
     var loader = document.getElementById('loader');
-    setTimeout(function() { loader.classList.add('hidden'); }, 2500);
+    var loaderCanvas = document.getElementById('loaderCanvas');
+    var lCtx = loaderCanvas.getContext('2d');
+    var sparks = [];
+
+    function resizeLoader() {
+        loaderCanvas.width = window.innerWidth;
+        loaderCanvas.height = window.innerHeight;
+    }
+    resizeLoader();
+
+    function Spark() {
+        this.x = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
+        this.y = window.innerHeight / 2 + (Math.random() - 0.5) * 200;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 3;
+        this.speedY = (Math.random() - 0.5) * 3;
+        this.life = 1;
+        this.decay = Math.random() * 0.02 + 0.005;
+        this.color = Math.random() > 0.5 ? '212,175,55' : '139,0,0';
+    }
+    Spark.prototype.update = function() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.life -= this.decay;
+        this.speedY += 0.02;
+    };
+    Spark.prototype.draw = function() {
+        lCtx.beginPath();
+        lCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        lCtx.fillStyle = 'rgba(' + this.color + ',' + this.life + ')';
+        lCtx.fill();
+    };
+
+    function animateSparks() {
+        lCtx.clearRect(0, 0, loaderCanvas.width, loaderCanvas.height);
+        if (sparks.length < 200) sparks.push(new Spark());
+        sparks = sparks.filter(function(s) { return s.life > 0; });
+        sparks.forEach(function(s) { s.update(); s.draw(); });
+        if (!loader.classList.contains('hidden')) requestAnimationFrame(animateSparks);
+    }
+    animateSparks();
+
+    setTimeout(function() {
+        loader.classList.add('hidden');
+    }, 3000);
+
+    // ===== SMOKE CANVAS =====
+    var smokeCanvas = document.getElementById('smokeCanvas');
+    var sCtx = smokeCanvas.getContext('2d');
+    var smokeParticles = [];
+
+    function resizeSmoke() {
+        smokeCanvas.width = window.innerWidth;
+        smokeCanvas.height = window.innerHeight;
+    }
+    resizeSmoke();
+    window.addEventListener('resize', resizeSmoke);
+
+    function Smoke() {
+        this.x = Math.random() * smokeCanvas.width;
+        this.y = smokeCanvas.height + 20;
+        this.size = Math.random() * 80 + 40;
+        this.speedY = -(Math.random() * 0.5 + 0.1);
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.opacity = Math.random() * 0.03 + 0.01;
+    }
+    Smoke.prototype.update = function() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.size += 0.2;
+        if (this.y < -this.size) {
+            this.y = smokeCanvas.height + this.size;
+            this.x = Math.random() * smokeCanvas.width;
+        }
+    };
+    Smoke.prototype.draw = function() {
+        sCtx.beginPath();
+        sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        sCtx.fillStyle = 'rgba(100,100,100,' + this.opacity + ')';
+        sCtx.fill();
+    };
+
+    for (var i = 0; i < 20; i++) smokeParticles.push(new Smoke());
+
+    function animateSmoke() {
+        sCtx.clearRect(0, 0, smokeCanvas.width, smokeCanvas.height);
+        smokeParticles.forEach(function(p) { p.update(); p.draw(); });
+        requestAnimationFrame(animateSmoke);
+    }
+    animateSmoke();
 
     // ===== CUSTOM CURSOR =====
-    var cursor = document.getElementById('cursor');
-    var cursorDot = document.getElementById('cursorDot');
+    var curOuter = document.getElementById('cursorOuter');
+    var curInner = document.getElementById('cursorInner');
     if (window.innerWidth > 992) {
+        var mouseX = 0, mouseY = 0;
+        var outerX = 0, outerY = 0;
         document.addEventListener('mousemove', function(e) {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            curInner.style.left = mouseX + 'px';
+            curInner.style.top = mouseY + 'px';
         });
-        document.querySelectorAll('a,button,.gallery-item').forEach(function(el) {
-            el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
-            el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
+        function animateCursor() {
+            outerX += (mouseX - outerX) * 0.15;
+            outerY += (mouseY - outerY) * 0.15;
+            curOuter.style.left = outerX + 'px';
+            curOuter.style.top = outerY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        document.querySelectorAll('a,button,.gallery-item,.hdr-burger,.mobnav-close').forEach(function(el) {
+            el.addEventListener('mouseenter', function() { curOuter.classList.add('hover'); });
+            el.addEventListener('mouseleave', function() { curOuter.classList.remove('hover'); });
         });
     }
 
     // ===== SCROLL PROGRESS =====
-    var scrollProgress = document.getElementById('scrollProgress');
+    var scrollProg = document.getElementById('scrollProgress');
     window.addEventListener('scroll', function() {
         var h = document.documentElement;
-        var pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-        scrollProgress.style.width = pct + '%';
+        scrollProg.style.width = ((h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100) + '%';
     });
-
-    // ===== PARTICLES =====
-    var canvas = document.getElementById('particles');
-    var ctx = canvas.getContext('2d');
-    var particles = [];
-    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    function Particle() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.4;
-        this.speedY = (Math.random() - 0.5) * 0.4;
-        this.opacity = Math.random() * 0.4 + 0.1;
-    }
-    Particle.prototype.update = function() {
-        this.x += this.speedX; this.y += this.speedY;
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-    };
-    Particle.prototype.draw = function() {
-        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(220,38,38,' + this.opacity + ')'; ctx.fill();
-    };
-    for (var i = 0; i < 60; i++) particles.push(new Particle());
-
-    function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(function(p) { p.update(); p.draw(); });
-        for (var a = 0; a < particles.length; a++) {
-            for (var b = a + 1; b < particles.length; b++) {
-                var dx = particles[a].x - particles[b].x;
-                var dy = particles[a].y - particles[b].y;
-                var dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 120) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[a].x, particles[a].y);
-                    ctx.lineTo(particles[b].x, particles[b].y);
-                    ctx.strokeStyle = 'rgba(220,38,38,' + (0.08 * (1 - dist / 120)) + ')';
-                    ctx.lineWidth = 0.5; ctx.stroke();
-                }
-            }
-        }
-        requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
 
     // ===== HEADER =====
     var hdr = document.getElementById('hdr');
@@ -99,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', function() {
         var cur = '';
         secs.forEach(function(s) { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
-        document.querySelectorAll('.hdr-nav-link').forEach(function(l) {
+        document.querySelectorAll('.hdr-link').forEach(function(l) {
             l.classList.remove('active');
             if (l.getAttribute('href') === '#' + cur) l.classList.add('active');
         });
@@ -127,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
     reveals.forEach(function(el) { revealObs.observe(el); });
 
     // ===== COUNTER ANIMATION =====
-    var counters = document.querySelectorAll('.stat-val[data-count]');
+    var counters = document.querySelectorAll('.trophy-val[data-count]');
     var counterObs = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) {
@@ -138,12 +188,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 var current = 0;
                 var timer = setInterval(function() {
                     current += step;
-                    if (current >= target) {
-                        el.textContent = target;
-                        clearInterval(timer);
-                    } else {
-                        el.textContent = Math.floor(current);
-                    }
+                    if (current >= target) { el.textContent = target; clearInterval(timer); }
+                    else { el.textContent = Math.floor(current); }
                 }, 16);
                 counterObs.unobserve(el);
             }
@@ -151,35 +197,83 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { threshold: 0.5 });
     counters.forEach(function(c) { counterObs.observe(c); });
 
+    // ===== 3D MASTER CARD =====
+    var master3d = document.getElementById('master3d');
+    var masterCard = document.getElementById('masterCard');
+    if (master3d && masterCard && window.innerWidth > 992) {
+        master3d.addEventListener('mousemove', function(e) {
+            var rect = master3d.getBoundingClientRect();
+            var x = e.clientX - rect.left;
+            var y = e.clientY - rect.top;
+            var centerX = rect.width / 2;
+            var centerY = rect.height / 2;
+            var rotateX = (y - centerY) / 20;
+            var rotateY = (centerX - x) / 20;
+            masterCard.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+        });
+        master3d.addEventListener('mouseleave', function() {
+            masterCard.style.transform = 'rotateX(0) rotateY(0)';
+        });
+    }
+
+    // ===== GALLERY FILTER =====
+    var filterBtns = document.querySelectorAll('.gallery-filter');
+    var galleryItems = document.querySelectorAll('.gallery-item');
+    filterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var filter = btn.getAttribute('data-filter');
+            galleryItems.forEach(function(item) {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    // ===== LIGHTBOX =====
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightboxImg');
+    var lightboxClose = document.getElementById('lightboxClose');
+    galleryItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+            var img = item.querySelector('img');
+            if (img) {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            }
+        });
+    });
+    lightboxClose.addEventListener('click', function() { lightbox.classList.remove('active'); });
+    lightbox.addEventListener('click', function(e) { if (e.target === lightbox) lightbox.classList.remove('active'); });
+
     // ===== FIREBASE: LOAD CONTENT =====
     db.collection('settings').doc('site').get()
         .then(function(doc) {
             if (doc.exists) {
                 var s = doc.data();
                 if (s.title) document.getElementById('heroTitle').innerHTML = s.title;
-                if (s.badge) document.getElementById('heroBadge').textContent = s.badge;
+                if (s.badge) document.querySelector('.hero-badge span:nth-child(2)').textContent = s.badge;
                 if (s.desc) document.getElementById('heroDesc').textContent = s.desc;
-                if (s.aboutTitle) document.getElementById('aboutTitle').textContent = s.aboutTitle;
-                if (s.aboutText) document.getElementById('aboutText').innerHTML = '<p>' + s.aboutText + '</p>';
                 if (s.heroImage) {
                     document.querySelector('.hero-bg').style.backgroundImage = 'url(' + s.heroImage + ')';
                     document.querySelector('.hero-bg').style.backgroundSize = 'cover';
                 }
                 if (s.aboutImage) {
-                    document.getElementById('aboutImage').innerHTML = '<img src="' + s.aboutImage + '" alt="باشگاه" style="width:100%;border-radius:16px;aspect-ratio:1;object-fit:cover">';
+                    document.getElementById('masterPhoto').innerHTML = '<img src="' + s.aboutImage + '" alt="استاد" style="width:100%;height:100%;border-radius:50%;object-fit:cover">';
                 }
-                if (s.masterPhoto) {
-                    document.getElementById('masterPhoto').innerHTML = '<div class="master-photo"><img src="' + s.masterPhoto + '" alt="استاد" style="width:100%;height:100%;border-radius:50%;object-fit:cover;position:relative;z-index:2"><div class="master-photo-ring"></div></div>';
-                }
-                // Gallery
                 if (s.gallery && Array.isArray(s.gallery)) {
                     var grid = document.getElementById('galleryGrid');
                     grid.innerHTML = '';
-                    s.gallery.forEach(function(url, i) {
-                        var item = document.createElement('div');
-                        item.className = 'gallery-item' + (i % 3 === 0 ? ' gallery-item-lg' : '');
-                        item.innerHTML = '<img src="' + url + '" alt="گالری" style="width:100%;height:100%;object-fit:cover">';
-                        grid.appendChild(item);
+                    s.gallery.forEach(function(item, i) {
+                        var el = document.createElement('div');
+                        el.className = 'gallery-item' + (i % 3 === 0 ? ' gallery-item-lg' : '');
+                        el.setAttribute('data-category', item.category || 'training');
+                        el.innerHTML = '<img src="' + item.url + '" alt="' + (item.title || 'گالری') + '" style="width:100%;height:100%;object-fit:cover">';
+                        grid.appendChild(el);
                     });
                 }
             }
@@ -197,6 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (d.image) {
                         var item = document.createElement('div');
                         item.className = 'gallery-item';
+                        item.setAttribute('data-category', d.category || 'training');
                         item.innerHTML = '<img src="' + d.image + '" alt="' + (d.title || 'گالری') + '" style="width:100%;height:100%;object-fit:cover">';
                         grid.appendChild(item);
                     }
@@ -205,25 +300,22 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(function(e) { console.log('Gallery:', e); });
 
-    // ===== FIREBASE: TESTIMONIALS =====
-    db.collection('testimonials').get()
+    // ===== FIREBASE: NEWS =====
+    db.collection('news').get()
         .then(function(snapshot) {
             if (!snapshot.empty) {
-                var grid = document.querySelector('.testimonials-grid');
+                var grid = document.getElementById('newsGrid');
                 grid.innerHTML = '';
                 snapshot.forEach(function(doc) {
-                    var t = doc.data();
+                    var n = doc.data();
                     var card = document.createElement('div');
-                    card.className = 'testimonial-card';
-                    card.innerHTML =
-                        '<div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>' +
-                        '<p class="testimonial-text">«' + (t.text || '') + '»</p>' +
-                        '<div class="testimonial-author"><div class="testimonial-avatar"><i class="fas fa-user"></i></div><div><h5>' + (t.name || '') + '</h5><span>' + (t.role || '') + '</span></div></div>';
+                    card.className = 'news-card';
+                    card.innerHTML = '<div class="news-card-img"><i class="fas ' + (n.icon || 'fa-trophy') + '"></i></div><div class="news-card-body"><span class="news-card-date">' + (n.date || '') + '</span><h4>' + (n.title || '') + '</h4><p>' + (n.description || '') + '</p></div>';
                     grid.appendChild(card);
                 });
             }
         })
-        .catch(function(e) { console.log('Testimonials:', e); });
+        .catch(function(e) { console.log('News:', e); });
 
     // ===== FIREBASE: FORM =====
     var form = document.getElementById('membershipForm');
@@ -234,7 +326,6 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         sBtn.disabled = true;
         sBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
-
         var data = {
             fullName: document.getElementById('fullName').value.trim(),
             phone: document.getElementById('phone').value.trim(),
@@ -245,7 +336,6 @@ document.addEventListener('DOMContentLoaded', function() {
             createdAt: new Date().toISOString(),
             status: 'pending'
         };
-
         db.collection('members').add(data)
             .then(function() {
                 fMsg.textContent = 'درخواست ثبت شد! به زودی تماس می‌گیریم.';
