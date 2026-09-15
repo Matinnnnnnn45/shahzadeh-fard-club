@@ -294,3 +294,32 @@ button,input,select,textarea{font-family:var(--font);outline:none;border:none;ba
     .hero-btns{flex-direction:column}
     .btn{width:100%;justify-content:center}
 }
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
+    .hero-dust,.hero-rays{animation:none!important}
+    .loader-ring,.loader-ring2{animation:spin 2s linear infinite!important}
+    .ftr-marquee-inner{animation:none!important}
+    .hero-mouse-wheel{animation:none!important}
+    #smokeCanvas{display:none!important}
+    [data-anim]{opacity:1!important;transform:none!important}
+}
+
+/* ===== WILL-CHANGE HINTS ===== */
+.hdr{will-change:background,padding}
+.hero-dust{will-change:background-position}
+.hero-rays{will-change:transform}
+.ftr-marquee-inner{will-change:transform}
+.loader-ring,.loader-ring2{will-change:transform}
+.hero-mouse-wheel{will-change:transform,opacity}
+.scroll-progress{will-change:width}
+[data-anim]{will-change:opacity,transform}
+[data-anim].revealed{will-change:auto}
+
+/* ===== BACKDROP-FILTER FALLBACK ===== */
+@supports not (backdrop-filter:blur(20px)){
+    .hdr.scrolled{background:rgba(2,2,2,.97)}
+    .hero-info{background:rgba(10,10,10,.9)}
+    .lightbox{background:rgba(0,0,0,.98)}
+}

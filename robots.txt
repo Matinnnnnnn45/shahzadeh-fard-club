@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+
+Sitemap: https://matinnnnnnn45.github.io/shahzadeh-fard-club/sitemap.xml
