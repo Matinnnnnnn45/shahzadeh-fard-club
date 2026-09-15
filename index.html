@@ -12,23 +12,33 @@
 </head>
 <body>
 
-    <!-- LOADING SCREEN -->
+    <!-- SCROLL PROGRESS -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- LOADER -->
     <div class="loader" id="loader">
         <div class="loader-content">
-            <div class="loader-karate">
-                <svg class="loader-svg" viewBox="0 0 120 120">
-                    <circle class="loader-ring" cx="60" cy="60" r="50"/>
-                    <circle class="loader-ring2" cx="60" cy="60" r="40"/>
-                    <text x="60" y="58" text-anchor="middle" dominant-baseline="middle" class="loader-kanji">極</text>
-                    <text x="60" y="76" text-anchor="middle" dominant-baseline="middle" class="loader-sub">真</text>
+            <div class="loader-icon-wrap">
+                <svg class="loader-svg" viewBox="0 0 200 200">
+                    <circle class="loader-ring-outer" cx="100" cy="100" r="90"/>
+                    <circle class="loader-ring-inner" cx="100" cy="100" r="70"/>
+                    <text x="100" y="90" text-anchor="middle" class="loader-kanji">極</text>
+                    <text x="100" y="120" text-anchor="middle" class="loader-kanji-sub">真</text>
                 </svg>
+                <div class="loader-punch">
+                    <i class="fas fa-fist-raised"></i>
+                </div>
             </div>
-            <div class="loader-bar"><div class="loader-bar-fill"></div></div>
-            <div class="loader-text">KYO-KUSHIN</div>
+            <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
+            <div class="loader-label">KYO-KUSHIN MATSUSHIMA</div>
         </div>
     </div>
 
-    <!-- PARTICLES CANVAS -->
+    <!-- PARTICLES -->
     <canvas id="particles"></canvas>
 
     <!-- HEADER -->
@@ -39,33 +49,34 @@
                 <span class="hdr-logo-txt">شاهزاده فرد</span>
             </a>
             <nav class="hdr-nav" id="hdrNav">
-                <a href="#home" class="hdr-nav-link active" data-text="خانه">خانه</a>
-                <a href="#about" class="hdr-nav-link" data-text="معرفی">معرفی</a>
-                <a href="#master" class="hdr-nav-link" data-text="استاد">استاد</a>
-                <a href="#stats" class="hdr-nav-link" data-text="افتخارات">افتخارات</a>
-                <a href="#contact" class="hdr-nav-link" data-text="تماس">تماس</a>
+                <a href="#home" class="hdr-nav-link active">خانه</a>
+                <a href="#about" class="hdr-nav-link">معرفی</a>
+                <a href="#master" class="hdr-nav-link">استاد</a>
+                <a href="#achievements" class="hdr-nav-link">افتخارات</a>
+                <a href="#gallery" class="hdr-nav-link">گالری</a>
+                <a href="#testimonials" class="hdr-nav-link">نظرات</a>
+                <a href="#schedule" class="hdr-nav-link">برنامه</a>
+                <a href="#contact" class="hdr-nav-link">تماس</a>
             </nav>
-            <button class="hdr-burger" id="hdrBurger" aria-label="منو">
-                <span></span><span></span><span></span>
-            </button>
+            <button class="hdr-burger" id="hdrBurger"><span></span><span></span><span></span></button>
         </div>
     </header>
 
     <!-- MOBILE NAV -->
     <div class="mobnav" id="mobnav">
         <div class="mobnav-head">
-            <span class="mobnav-logo"><i class="fas fa-fist-raised"></i></span>
+            <span class="mobnav-karate">極</span>
             <button class="mobnav-close" id="mobnavClose"><i class="fas fa-xmark"></i></button>
         </div>
         <div class="mobnav-links">
-            <a href="#home" class="mobnav-link"><span class="mobnav-link-num">01</span> خانه</a>
-            <a href="#about" class="mobnav-link"><span class="mobnav-link-num">02</span> معرفی</a>
-            <a href="#master" class="mobnav-link"><span class="mobnav-link-num">03</span> استاد</a>
-            <a href="#stats" class="mobnav-link"><span class="mobnav-link-num">04</span> افتخارات</a>
-            <a href="#contact" class="mobnav-link"><span class="mobnav-link-num">05</span> تماس</a>
-        </div>
-        <div class="mobnav-footer">
-            <p>KYO-KUSHIN MATSUSHIMA</p>
+            <a href="#home" class="mobnav-link"><span class="mobnav-num">01</span> خانه</a>
+            <a href="#about" class="mobnav-link"><span class="mobnav-num">02</span> معرفی</a>
+            <a href="#master" class="mobnav-link"><span class="mobnav-num">03</span> استاد</a>
+            <a href="#achievements" class="mobnav-link"><span class="mobnav-num">04</span> افتخارات</a>
+            <a href="#gallery" class="mobnav-link"><span class="mobnav-num">05</span> گالری</a>
+            <a href="#testimonials" class="mobnav-link"><span class="mobnav-num">06</span> نظرات</a>
+            <a href="#schedule" class="mobnav-link"><span class="mobnav-num">07</span> برنامه</a>
+            <a href="#contact" class="mobnav-link"><span class="mobnav-num">08</span> تماس</a>
         </div>
     </div>
     <div class="mobnav-bg" id="mobnavBg"></div>
@@ -73,91 +84,86 @@
     <!-- HERO -->
     <section class="hero" id="home">
         <div class="hero-bg">
-            <div class="hero-grid-lines"></div>
-            <div class="hero-glow"></div>
+            <div class="hero-grid"></div>
+            <div class="hero-glow hero-glow1"></div>
+            <div class="hero-glow hero-glow2"></div>
         </div>
         <div class="hero-content">
-            <div class="hero-tag">
+            <div class="hero-tag" data-anim="fade-down">
                 <span class="hero-tag-line"></span>
-                <span id="heroBadge">KIOKUSHIN MATSUSHIMA</span>
+                <span id="heroBadge">KYO-KUSHIN MATSUSHIMA</span>
                 <span class="hero-tag-line"></span>
             </div>
-            <h1 class="hero-title" id="heroTitle">
+            <h1 class="hero-title" id="heroTitle" data-anim="fade-up">
                 <span class="hero-title-line">باشگاه</span>
-                <span class="hero-title-line hero-title-accent">شیهان</span>
+                <span class="hero-title-line hero-title-red">شیهان</span>
                 <span class="hero-title-line">شاهزاده فرد</span>
             </h1>
-            <p class="hero-desc" id="heroDesc">شاهین‌شهر — تربیت جنگجوی واقعی</p>
-            <div class="hero-btns">
-                <a href="#contact" class="btn btn-glow">
-                    <span class="btn-glow-bg"></span>
-                    <i class="fas fa-fist-raised"></i>
-                    <span>عضویت در باشگاه</span>
-                </a>
-                <a href="#about" class="btn btn-ghost">
-                    <span>بیشتر بدانید</span>
-                    <i class="fas fa-arrow-left"></i>
-                </a>
+            <p class="hero-desc" id="heroDesc" data-anim="fade-up">شاهین‌شهر — تربیت جنگجوی واقعی</p>
+            <div class="hero-btns" data-anim="fade-up">
+                <a href="#contact" class="btn btn-red"><i class="fas fa-fist-raised"></i> عضویت در باشگاه</a>
+                <a href="#about" class="btn btn-ghost">بیشتر بدانید <i class="fas fa-arrow-left"></i></a>
             </div>
         </div>
-        <div class="hero-scroll-hint">
-            <div class="hero-scroll-mouse">
-                <div class="hero-scroll-wheel"></div>
-            </div>
+        <div class="hero-scroll" data-anim="fade-up">
+            <div class="hero-mouse"><div class="hero-mouse-wheel"></div></div>
             <span>اسکرول</span>
         </div>
+        <!-- Floating karate icons -->
+        <div class="hero-float hero-float1"><i class="fas fa-fist-raised"></i></div>
+        <div class="hero-float hero-float2"><i class="fas fa-shield-halved"></i></div>
+        <div class="hero-float hero-float3"><i class="fas fa-belt"></i></div>
     </section>
 
     <!-- ABOUT -->
     <section class="sec" id="about">
         <div class="container">
-            <div class="sec-hdr">
+            <div class="sec-hdr" data-anim="fade-up">
                 <span class="sec-num">01</span>
-                <h2 class="sec-title" data-reveal>معرفی باشگاه</h2>
+                <h2 class="sec-title">معرفی باشگاه</h2>
                 <div class="sec-line"></div>
             </div>
-            <div class="about-grid">
-                <div class="about-left" data-reveal>
+            <div class="about-split">
+                <div class="about-left" data-anim="fade-right">
                     <h3 id="aboutTitle">باشگاه کاراته کیوکوشین ماتسوشیما شاهزاده فرد</h3>
                     <div id="aboutText">
                         <p>باشگاه شیهان شاهزاده فرد وابسته به سبک کیوکوشین ماتسوشیما، در شهر شاهین‌شهر فعالیت می‌کند. این باشگاه زیر نظر استاد حسین شاهزاده، قهرمان جهان و دارنده کمربند دان ۶ کیوکوشین ماتسوشیما با بیش از ۲۰ سال سابقه تدریس، اداره می‌شود.</p>
                         <p>هدف ما تعلیم اصولی هنر رزمی کاراته کیوکوشین بر پایه انضباط، احترام و تلاش مستمر است.</p>
                     </div>
                 </div>
-                <div class="about-right" data-reveal id="aboutImage">
+                <div class="about-right" data-anim="fade-left" id="aboutImage">
                     <div class="about-visual">
-                        <div class="about-visual-box">
-                            <i class="fas fa-fist-raised"></i>
-                        </div>
+                        <div class="about-visual-box"><i class="fas fa-fist-raised"></i></div>
                         <div class="about-visual-ring"></div>
                         <div class="about-visual-ring about-visual-ring2"></div>
+                        <div class="about-visual-ring about-visual-ring3"></div>
                     </div>
                 </div>
             </div>
-            <div class="features-row">
-                <div class="feature-card" data-reveal>
-                    <div class="feature-card-num">01</div>
-                    <div class="feature-card-icon"><i class="fas fa-shield-halved"></i></div>
+            <div class="features-grid">
+                <div class="feature-card" data-anim="fade-up">
+                    <div class="feature-num">01</div>
+                    <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
                     <h4>کیوکوشین ماتسوشیما</h4>
-                    <p>آموزش اصولی و استاندارد سبک کیوکوشین</p>
+                    <p>آموزش اصولی و استاندارد</p>
                 </div>
-                <div class="feature-card" data-reveal>
-                    <div class="feature-card-num">02</div>
-                    <div class="feature-card-icon"><i class="fas fa-trophy"></i></div>
+                <div class="feature-card" data-anim="fade-up">
+                    <div class="feature-num">02</div>
+                    <div class="feature-icon"><i class="fas fa-trophy"></i></div>
                     <h4>قهرمان جهان</h4>
-                    <p>سرمربی قهرمان مسابقات جهانی</p>
+                    <p>سرمربی قهرمان جهانی</p>
                 </div>
-                <div class="feature-card" data-reveal>
-                    <div class="feature-card-num">03</div>
-                    <div class="feature-card-icon"><i class="fas fa-clock"></i></div>
-                    <h4>۲۰ سال سابقه</h4>
-                    <p>بیش از دو دهه تجربه تدریس</p>
+                <div class="feature-card" data-anim="fade-up">
+                    <div class="feature-num">03</div>
+                    <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                    <h4>۲۰+ سال</h4>
+                    <p>تجربه تدریس</p>
                 </div>
-                <div class="feature-card" data-reveal>
-                    <div class="feature-card-num">04</div>
-                    <div class="feature-card-icon"><i class="fas fa-location-dot"></i></div>
-                    <h4>۲ محل تمرین</h4>
-                    <p>باشگاه ملت و باشگاه تختی</p>
+                <div class="feature-card" data-anim="fade-up">
+                    <div class="feature-num">04</div>
+                    <div class="feature-icon"><i class="fas fa-location-dot"></i></div>
+                    <h4>۲ محل</h4>
+                    <p>باشگاه ملت و تختی</p>
                 </div>
             </div>
         </div>
@@ -165,41 +171,39 @@
 
     <!-- MASTER -->
     <section class="sec sec-dark" id="master">
-        <div class="sec-bg-pattern"></div>
+        <div class="sec-pattern"></div>
         <div class="container">
-            <div class="sec-hdr sec-hdr-light">
+            <div class="sec-hdr sec-hdr-light" data-anim="fade-up">
                 <span class="sec-num">02</span>
-                <h2 class="sec-title" data-reveal>استاد حسین شاهزاده</h2>
+                <h2 class="sec-title">استاد حسین شاهزاده</h2>
                 <div class="sec-line sec-line-gold"></div>
             </div>
-            <div class="master-box" data-reveal>
+            <div class="master-box" data-anim="fade-up">
                 <div class="master-left" id="masterPhoto">
                     <div class="master-photo">
-                        <div class="master-photo-inner">
-                            <i class="fas fa-medal"></i>
-                        </div>
-                        <div class="master-photo-border"></div>
+                        <div class="master-photo-inner"><i class="fas fa-medal"></i></div>
+                        <div class="master-photo-ring"></div>
                     </div>
                 </div>
                 <div class="master-right">
                     <span class="master-label">سرمربی و موسس</span>
                     <h3 class="master-name">استاد حسین شاهزاده</h3>
                     <span class="master-badge"><i class="fas fa-crown"></i> قهرمان جهان</span>
-                    <div class="master-numbers">
-                        <div class="master-num">
+                    <div class="master-nums">
+                        <div class="master-num-item">
                             <span class="master-num-val">دان ۶</span>
                             <span class="master-num-lbl">کمربند مشکی</span>
                         </div>
-                        <div class="master-num">
+                        <div class="master-num-item">
                             <span class="master-num-val">۲۰+</span>
                             <span class="master-num-lbl">سال تجربه</span>
                         </div>
-                        <div class="master-num">
+                        <div class="master-num-item">
                             <span class="master-num-val">جهانی</span>
                             <span class="master-num-lbl">قهرمانی</span>
                         </div>
                     </div>
-                    <ul class="master-checks">
+                    <ul class="master-list">
                         <li><i class="fas fa-check-circle"></i> کمربند مشکی — دان ۶ کیوکوشین ماتسوشیما</li>
                         <li><i class="fas fa-check-circle"></i> بیش از ۲۰ سال سابقه تدریس و مسابقه</li>
                         <li><i class="fas fa-check-circle"></i> قهرمان مسابقات جهانی کیوکوشین</li>
@@ -210,103 +214,180 @@
         </div>
     </section>
 
-    <!-- STATS -->
-    <section class="sec" id="stats">
+    <!-- ACHIEVEMENTS / STATS -->
+    <section class="sec" id="achievements">
         <div class="container">
-            <div class="sec-hdr">
+            <div class="sec-hdr" data-anim="fade-up">
                 <span class="sec-num">03</span>
-                <h2 class="sec-title" data-reveal>برنامه تمرین</h2>
+                <h2 class="sec-title">افتخارات و دستاوردها</h2>
                 <div class="sec-line"></div>
             </div>
-            <div class="schedule-box" data-reveal>
-                <div class="sch-row sch-head">
-                    <div class="sch-cell">محل تمرین</div>
-                    <div class="sch-cell">آدرس</div>
-                    <div class="sch-cell">روزها</div>
-                    <div class="sch-cell">ساعت</div>
+            <div class="stats-grid">
+                <div class="stat-card" data-anim="zoom">
+                    <div class="stat-card-bg"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-val" data-count="20">۰</div>
+                    <div class="stat-plus">+</div>
+                    <div class="stat-lbl">سال سابقه</div>
                 </div>
-                <div class="sch-row">
-                    <div class="sch-cell sch-name"><i class="fas fa-dumbbell"></i> باشگاه ملت</div>
-                    <div class="sch-cell">شاهین‌شهر، خیابان بهداری</div>
-                    <div class="sch-cell">یکشنبه — سه‌شنبه — پنجشنبه</div>
-                    <div class="sch-cell sch-time">۱۸:۳۰ تا ۲۰:۰۰</div>
+                <div class="stat-card stat-card-gold" data-anim="zoom">
+                    <div class="stat-card-bg"><i class="fas fa-medal"></i></div>
+                    <div class="stat-val" data-count="6">۰</div>
+                    <div class="stat-plus">دان</div>
+                    <div class="stat-lbl">درجه استاد</div>
                 </div>
-                <div class="sch-row">
-                    <div class="sch-cell sch-name"><i class="fas fa-dumbbell"></i> باشگاه تختی</div>
-                    <div class="sch-cell">شاهین‌شهر، خیابان مخابرات</div>
-                    <div class="sch-cell">یکشنبه — سه‌شنبه — پنجشنبه</div>
-                    <div class="sch-cell sch-time">۲۰:۰۰ تا ۲۰:۴۵</div>
+                <div class="stat-card" data-anim="zoom">
+                    <div class="stat-card-bg"><i class="fas fa-users"></i></div>
+                    <div class="stat-val" data-count="500">۰</div>
+                    <div class="stat-plus">+</div>
+                    <div class="stat-lbl">هنرجوی تربیت شده</div>
+                </div>
+                <div class="stat-card stat-card-gold" data-anim="zoom">
+                    <div class="stat-card-bg"><i class="fas fa-globe"></i></div>
+                    <div class="stat-val" data-count="1">۰</div>
+                    <div class="stat-plus">عنوان</div>
+                    <div class="stat-lbl">قهرمان جهان</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="sec sec-dark" id="gallery">
+        <div class="sec-pattern"></div>
+        <div class="container">
+            <div class="sec-hdr sec-hdr-light" data-anim="fade-up">
+                <span class="sec-num">04</span>
+                <h2 class="sec-title">گالری تصاویر</h2>
+                <div class="sec-line sec-line-gold"></div>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-item gallery-item-lg" data-anim="fade-up">
+                    <div class="gallery-placeholder"><i class="fas fa-fist-raised"></i><span>تمرین کیوکوشین</span></div>
+                </div>
+                <div class="gallery-item" data-anim="fade-up">
+                    <div class="gallery-placeholder"><i class="fas fa-trophy"></i><span>مسابقات</span></div>
+                </div>
+                <div class="gallery-item" data-anim="fade-up">
+                    <div class="gallery-placeholder"><i class="fas fa-users"></i><span>تیم باشگاه</span></div>
+                </div>
+                <div class="gallery-item" data-anim="fade-up">
+                    <div class="gallery-placeholder"><i class="fas fa-award"></i><span>کمربندگیری</span></div>
+                </div>
+                <div class="gallery-item gallery-item-lg" data-anim="fade-up">
+                    <div class="gallery-placeholder"><i class="fas fa-graduation-cap"></i><span>آزمون فنی</span></div>
+                </div>
+                <div class="gallery-item" data-anim="fade-up">
+                    <div class="gallery-placeholder"><i class="fas fa-hand-fist"></i><span>مسابقه آزاد</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="sec" id="testimonials">
+        <div class="container">
+            <div class="sec-hdr" data-anim="fade-up">
+                <span class="sec-num">05</span>
+                <h2 class="sec-title">نظرات هنرجویان</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-anim="fade-up">
+                    <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial-text">«باشگاه شاهزاده فرد بهترین باشگاه رزمی شاهین‌شهره. استاد شاهزاده واقعاً استاد هستن و با صبر و حوصله یاد میدن.»</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                        <div>
+                            <h5>علی محمدی</h5>
+                            <span>هنرجوی پیشرفته</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-anim="fade-up">
+                    <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial-text">«پسرم ۲ ساله توی باشگاه تمرین میکنه. هم از نظر فنی و هم اخلاقی خیلی پیشرفت کرده. ممنونم استاد.»</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                        <div>
+                            <h5>رضا حسینی</h5>
+                            <span>پدر هنرجو</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-anim="fade-up">
+                    <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial-text">«من قبلاً هیچ تجربه رزمی نداشتم ولی بعد از ۶ ماه واقعاً تغییر رو حس میکنم. انضباط و اعتماد به نفسم خیلی بیشتر شده.»</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                        <div>
+                            <h5>امیر رضایی</h5>
+                            <span>هنرجوی مبتدی</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section class="sec sec-dark" id="schedule">
+        <div class="sec-pattern"></div>
+        <div class="container">
+            <div class="sec-hdr sec-hdr-light" data-anim="fade-up">
+                <span class="sec-num">06</span>
+                <h2 class="sec-title">برنامه تمرین</h2>
+                <div class="sec-line sec-line-gold"></div>
+            </div>
+            <div class="schedule-cards">
+                <div class="sch-card" data-anim="fade-up">
+                    <div class="sch-card-head">
+                        <div class="sch-card-icon"><i class="fas fa-dumbbell"></i></div>
+                        <h3>باشگاه ملت</h3>
+                    </div>
+                    <div class="sch-card-body">
+                        <div class="sch-card-row"><span><i class="fas fa-location-dot"></i> آدرس</span><span>شاهین‌شهر، خیابان بهداری</span></div>
+                        <div class="sch-card-row"><span><i class="fas fa-calendar-days"></i> روزها</span><span>یکشنبه — سه‌شنبه — پنجشنبه</span></div>
+                        <div class="sch-card-row sch-card-row-red"><span><i class="fas fa-clock"></i> ساعت</span><span>۱۸:۳۰ تا ۲۰:۰۰</span></div>
+                    </div>
+                </div>
+                <div class="sch-card" data-anim="fade-up">
+                    <div class="sch-card-head">
+                        <div class="sch-card-icon"><i class="fas fa-dumbbell"></i></div>
+                        <h3>باشگاه تختی</h3>
+                    </div>
+                    <div class="sch-card-body">
+                        <div class="sch-card-row"><span><i class="fas fa-location-dot"></i> آدرس</span><span>شاهین‌شهر، خیابان مخابرات</span></div>
+                        <div class="sch-card-row"><span><i class="fas fa-calendar-days"></i> روزها</span><span>یکشنبه — سه‌شنبه — پنجشنبه</span></div>
+                        <div class="sch-card-row sch-card-row-red"><span><i class="fas fa-clock"></i> ساعت</span><span>۲۰:۰۰ تا ۲۰:۴۵</span></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CONTACT -->
-    <section class="sec sec-dark" id="contact">
-        <div class="sec-bg-pattern"></div>
+    <section class="sec" id="contact">
         <div class="container">
-            <div class="sec-hdr sec-hdr-light">
-                <span class="sec-num">04</span>
-                <h2 class="sec-title" data-reveal>تماس و عضویت</h2>
-                <div class="sec-line sec-line-gold"></div>
+            <div class="sec-hdr" data-anim="fade-up">
+                <span class="sec-num">07</span>
+                <h2 class="sec-title">تماس و عضویت</h2>
+                <div class="sec-line"></div>
             </div>
             <div class="contact-grid">
-                <div class="contact-cards" data-reveal>
-                    <div class="c-card">
-                        <div class="c-card-icon"><i class="fas fa-phone"></i></div>
-                        <h4>تلفن</h4>
-                        <p dir="ltr">+98 913 309 8749</p>
-                    </div>
-                    <div class="c-card">
-                        <div class="c-card-icon"><i class="fas fa-location-dot"></i></div>
-                        <h4>محل فعالیت</h4>
-                        <p>شاهین‌شهر</p>
-                    </div>
-                    <div class="c-card">
-                        <div class="c-card-icon"><i class="fas fa-calendar-days"></i></div>
-                        <h4>روزهای تمرین</h4>
-                        <p>یکشنبه، سه‌شنبه، پنجشنبه</p>
-                    </div>
-                    <div class="c-card">
-                        <div class="c-card-icon"><i class="fas fa-clock"></i></div>
-                        <h4>ساعت تمرین</h4>
-                        <p>۱۸:۳۰ — ۲۰:۴۵</p>
-                    </div>
+                <div class="contact-cards-col" data-anim="fade-right">
+                    <div class="c-card"><div class="c-icon"><i class="fas fa-phone"></i></div><h4>تلفن</h4><p dir="ltr">+98 913 309 8749</p></div>
+                    <div class="c-card"><div class="c-icon"><i class="fas fa-location-dot"></i></div><h4>محل</h4><p>شاهین‌شهر</p></div>
+                    <div class="c-card"><div class="c-icon"><i class="fas fa-calendar-days"></i></div><h4>روزها</h4><p>یکشنبه، سه‌شنبه، پنجشنبه</p></div>
+                    <div class="c-card"><div class="c-icon"><i class="fas fa-clock"></i></div><h4>ساعت</h4><p>۱۸:۳۰ — ۲۰:۴۵</p></div>
                 </div>
-                <div class="contact-form" data-reveal>
+                <div class="contact-form-col" data-anim="fade-left">
                     <h3>فرم عضویت</h3>
                     <form id="membershipForm">
-                        <div class="f-row">
-                            <div class="f-field"><input type="text" id="fullName" placeholder="نام و نام خانوادگی" required></div>
-                            <div class="f-field"><input type="tel" id="phone" placeholder="شماره تماس" required dir="ltr"></div>
-                        </div>
-                        <div class="f-row">
-                            <div class="f-field"><input type="number" id="age" placeholder="سن" required min="5" max="60"></div>
-                            <div class="f-field">
-                                <select id="location" required>
-                                    <option value="">انتخاب محل تمرین</option>
-                                    <option value="mellat">باشگاه ملت</option>
-                                    <option value="takhti">باشگاه تختی</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="f-field">
-                            <select id="experience">
-                                <option value="">سابقه ورزشی</option>
-                                <option value="none">بدون سابقه</option>
-                                <option value="beginner">مبتدی</option>
-                                <option value="intermediate">متوسط</option>
-                                <option value="advanced">پیشرفته</option>
-                            </select>
-                        </div>
-                        <div class="f-field">
-                            <textarea id="message" rows="3" placeholder="پیام شما"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-glow btn-full" id="submitBtn">
-                            <span class="btn-glow-bg"></span>
-                            <i class="fas fa-paper-plane"></i>
-                            <span>ارسال درخواست</span>
-                        </button>
+                        <div class="f-row"><div class="f-field"><input type="text" id="fullName" placeholder="نام و نام خانوادگی" required></div><div class="f-field"><input type="tel" id="phone" placeholder="شماره تماس" required dir="ltr"></div></div>
+                        <div class="f-row"><div class="f-field"><input type="number" id="age" placeholder="سن" required min="5" max="60"></div><div class="f-field"><select id="location" required><option value="">انتخاب محل</option><option value="mellat">باشگاه ملت</option><option value="takhti">باشگاه تختی</option></select></div></div>
+                        <div class="f-field"><select id="experience"><option value="">سابقه ورزشی</option><option value="none">بدون سابقه</option><option value="beginner">مبتدی</option><option value="intermediate">متوسط</option><option value="advanced">پیشرفته</option></select></div>
+                        <div class="f-field"><textarea id="message" rows="3" placeholder="پیام شما"></textarea></div>
+                        <button type="submit" class="btn btn-red btn-full" id="submitBtn"><i class="fas fa-paper-plane"></i> ارسال درخواست</button>
                     </form>
                     <div id="formMessage" class="f-msg"></div>
                 </div>
@@ -316,6 +397,11 @@
 
     <!-- FOOTER -->
     <footer class="ftr">
+        <div class="ftr-marquee">
+            <div class="ftr-marquee-inner">
+                <span>極真</span><span>KYO-KUSHIN</span><span>کیوکوشین</span><span>ماتسوشیما</span><span>شاهزاده فرد</span><span>MATSUSHIMA</span><span>極真</span><span>KYO-KUSHIN</span><span>کیوکوشین</span><span>ماتسوشیما</span><span>شاهزاده فرد</span><span>MATSUSHIMA</span>
+            </div>
+        </div>
         <div class="container ftr-inner">
             <div class="ftr-brand">
                 <span class="ftr-logo"><i class="fas fa-fist-raised"></i> شاهزاده فرد</span>
@@ -323,10 +409,7 @@
             </div>
             <div class="ftr-links">
                 <h4>لینک‌ها</h4>
-                <a href="#about">معرفی</a>
-                <a href="#master">استاد</a>
-                <a href="#stats">برنامه تمرین</a>
-                <a href="#contact">تماس</a>
+                <a href="#about">معرفی</a><a href="#master">استاد</a><a href="#achievements">افتخارات</a><a href="#gallery">گالری</a><a href="#contact">تماس</a>
             </div>
             <div class="ftr-info">
                 <h4>تماس</h4>
@@ -334,12 +417,9 @@
                 <p><i class="fas fa-location-dot"></i> شاهین‌شهر</p>
             </div>
         </div>
-        <div class="ftr-bottom">
-            <p>&copy; ۱۴۰۵ باشگاه شیهان شاهزاده فرد</p>
-        </div>
+        <div class="ftr-bottom"><p>&copy; ۱۴۰۵ باشگاه شیهان شاهزاده فرد</p></div>
     </footer>
 
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <script src="js/firebase-config.js"></script>
