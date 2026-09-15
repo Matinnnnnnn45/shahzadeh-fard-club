@@ -1,176 +1,158 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // ===== Preloader =====
-    var preloader = document.getElementById('preloader');
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            preloader.classList.add('hidden');
-        }, 600);
-    });
-    // Fallback: hide preloader after 3 seconds max
-    setTimeout(function() {
-        preloader.classList.add('hidden');
-    }, 3000);
+    // ===== LOADER =====
+    var loader = document.getElementById('loader');
+    setTimeout(function() { loader.classList.add('hidden'); }, 2200);
 
-    // ===== Header Scroll =====
-    var header = document.getElementById('header');
-    window.addEventListener('scroll', function() {
-        header.classList.toggle('scrolled', window.scrollY > 50);
-    });
+    // ===== PARTICLES =====
+    var canvas = document.getElementById('particles');
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var particleCount = 50;
 
-    // ===== Mobile Nav =====
-    var headerMenu = document.getElementById('headerMenu');
-    var mobileNav = document.getElementById('mobileNav');
-    var mobileNavClose = document.getElementById('mobileNavClose');
-    var mobileNavOverlay = document.getElementById('mobileNavOverlay');
-
-    function openMobileNav() {
-        mobileNav.classList.add('open');
-        mobileNavOverlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
-    function closeMobileNav() {
-        mobileNav.classList.remove('open');
-        mobileNavOverlay.classList.remove('open');
-        document.body.style.overflow = '';
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function Particle() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = Math.random() * 0.5 + 0.1;
+    }
+    Particle.prototype.update = function() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    };
+    Particle.prototype.draw = function() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(220,38,38,' + this.opacity + ')';
+        ctx.fill();
+    };
+
+    for (var i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
     }
 
-    headerMenu.addEventListener('click', openMobileNav);
-    mobileNavClose.addEventListener('click', closeMobileNav);
-    mobileNavOverlay.addEventListener('click', closeMobileNav);
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(function(p) {
+            p.update();
+            p.draw();
+        });
+        // Draw lines between nearby particles
+        for (var a = 0; a < particles.length; a++) {
+            for (var b = a + 1; b < particles.length; b++) {
+                var dx = particles[a].x - particles[b].x;
+                var dy = particles[a].y - particles[b].y;
+                var dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[a].x, particles[a].y);
+                    ctx.lineTo(particles[b].x, particles[b].y);
+                    ctx.strokeStyle = 'rgba(220,38,38,' + (0.1 * (1 - dist / 150)) + ')';
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
 
-    document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
-        link.addEventListener('click', closeMobileNav);
-    });
-
-    // ===== Active Nav Link =====
-    var sections = document.querySelectorAll('section[id]');
+    // ===== HEADER =====
+    var hdr = document.getElementById('hdr');
     window.addEventListener('scroll', function() {
-        var current = '';
-        sections.forEach(function(section) {
-            if (window.scrollY >= section.offsetTop - 200) {
-                current = section.getAttribute('id');
-            }
-        });
-        document.querySelectorAll('.header-nav-link').forEach(function(link) {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-            }
+        hdr.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ===== MOBILE NAV =====
+    var hdrBurger = document.getElementById('hdrBurger');
+    var mobnav = document.getElementById('mobnav');
+    var mobnavClose = document.getElementById('mobnavClose');
+    var mobnavBg = document.getElementById('mobnavBg');
+
+    function openMob() { mobnav.classList.add('open'); mobnavBg.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeMob() { mobnav.classList.remove('open'); mobnavBg.classList.remove('open'); document.body.style.overflow = ''; }
+
+    hdrBurger.addEventListener('click', openMob);
+    mobnavClose.addEventListener('click', closeMob);
+    mobnavBg.addEventListener('click', closeMob);
+    document.querySelectorAll('.mobnav-link').forEach(function(l) { l.addEventListener('click', closeMob); });
+
+    // ===== ACTIVE NAV =====
+    var secs = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', function() {
+        var cur = '';
+        secs.forEach(function(s) { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
+        document.querySelectorAll('.hdr-nav-link').forEach(function(l) {
+            l.classList.remove('active');
+            if (l.getAttribute('href') === '#' + cur) l.classList.add('active');
         });
     });
 
-    // ===== Smooth Scroll =====
-    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-        anchor.addEventListener('click', function(e) {
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+        a.addEventListener('click', function(e) {
             e.preventDefault();
-            var target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
+            var t = document.querySelector(this.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior: 'smooth' });
         });
     });
 
-    // ===== Reveal on Scroll =====
-    var revealElements = document.querySelectorAll('.about-text, .about-image, .about-feature, .master-card, .dojo-card, .contact-card, .contact-form-box');
-    revealElements.forEach(function(el) { el.classList.add('reveal'); });
-
-    var revealObserver = new IntersectionObserver(function(entries) {
+    // ===== REVEAL ON SCROLL =====
+    var reveals = document.querySelectorAll('[data-reveal]');
+    var revealObs = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                revealObserver.unobserve(entry.target);
+                entry.target.classList.add('revealed');
+                revealObs.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1 });
+    reveals.forEach(function(el) { revealObs.observe(el); });
 
-    revealElements.forEach(function(el) { revealObserver.observe(el); });
-
-    // ===== Firebase: Load Dynamic Content =====
-    function loadContent() {
-        // Load site settings
-        db.collection('settings').doc('site').get()
-            .then(function(doc) {
-                if (doc.exists) {
-                    var s = doc.data();
-                    if (s.title) document.getElementById('heroTitle').innerHTML = s.title;
-                    if (s.badge) document.getElementById('heroBadge').textContent = s.badge;
-                    if (s.desc) document.getElementById('heroDesc').textContent = s.desc;
-                    if (s.aboutText) document.getElementById('aboutText').innerHTML = s.aboutText;
-                    if (s.heroImage) {
-                        document.querySelector('.hero-bg').style.backgroundImage = 'url(' + s.heroImage + ')';
-                        document.querySelector('.hero-bg').style.backgroundSize = 'cover';
-                        document.querySelector('.hero-bg').style.backgroundPosition = 'center';
-                    }
-                    if (s.aboutImage) {
-                        document.getElementById('aboutImage').innerHTML = '<img src="' + s.aboutImage + '" alt="باشگاه" style="width:100%;border-radius:16px">';
-                    }
-                    if (s.masterPhoto) {
-                        document.getElementById('masterPhoto').innerHTML = '<img src="' + s.masterPhoto + '" alt="استاد شاهزاده" style="width:180px;height:180px;border-radius:50%;object-fit:cover">';
-                    }
+    // ===== FIREBASE: LOAD CONTENT =====
+    db.collection('settings').doc('site').get()
+        .then(function(doc) {
+            if (doc.exists) {
+                var s = doc.data();
+                if (s.title) document.getElementById('heroTitle').innerHTML = s.title;
+                if (s.badge) document.getElementById('heroBadge').textContent = s.badge;
+                if (s.desc) document.getElementById('heroDesc').textContent = s.desc;
+                if (s.aboutTitle) document.getElementById('aboutTitle').textContent = s.aboutTitle;
+                if (s.aboutText) document.getElementById('aboutText').innerHTML = '<p>' + s.aboutText + '</p>';
+                if (s.heroImage) {
+                    document.querySelector('.hero-bg').style.backgroundImage = 'url(' + s.heroImage + ')';
+                    document.querySelector('.hero-bg').style.backgroundSize = 'cover';
                 }
-            })
-            .catch(function(e) { console.log('Settings error:', e); });
-
-        // Load dojos
-        db.collection('dojos').get()
-            .then(function(snapshot) {
-                if (!snapshot.empty) {
-                    var grid = document.getElementById('dojosGrid');
-                    grid.innerHTML = '';
-                    snapshot.forEach(function(doc) {
-                        var d = doc.data();
-                        var card = document.createElement('div');
-                        card.className = 'dojo-card reveal visible';
-                        card.innerHTML =
-                            '<div class="dojo-header">' +
-                                '<div class="dojo-icon"><i class="fas fa-dumbbell"></i></div>' +
-                                '<h3>' + (d.name || '') + '</h3>' +
-                            '</div>' +
-                            '<div class="dojo-body">' +
-                                '<div class="dojo-address">' +
-                                    '<i class="fas fa-location-dot"></i>' +
-                                    '<span>' + (d.address || '') + '</span>' +
-                                '</div>' +
-                                '<div class="dojo-info">' +
-                                    '<div class="dojo-info-row">' +
-                                        '<span class="dojo-info-label"><i class="fas fa-calendar-days"></i> روزها</span>' +
-                                        '<span class="dojo-info-value">' + (d.days || '') + '</span>' +
-                                    '</div>' +
-                                    '<div class="dojo-info-row">' +
-                                        '<span class="dojo-info-label"><i class="fas fa-clock"></i> ساعت</span>' +
-                                        '<span class="dojo-info-value">' + (d.time || '') + '</span>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>';
-                        grid.appendChild(card);
-                    });
+                if (s.aboutImage) {
+                    document.getElementById('aboutImage').innerHTML = '<img src="' + s.aboutImage + '" alt="باشگاه" style="width:100%;border-radius:16px;aspect-ratio:1;object-fit:cover">';
                 }
-            })
-            .catch(function(e) { console.log('Dojos error:', e); });
-
-        // Load contact info
-        db.collection('settings').doc('contact').get()
-            .then(function(doc) {
-                if (doc.exists) {
-                    var c = doc.data();
-                    // Update contact cards if needed
+                if (s.masterPhoto) {
+                    document.getElementById('masterPhoto').innerHTML = '<div class="master-photo"><img src="' + s.masterPhoto + '" alt="استاد" style="width:100%;height:100%;border-radius:50%;object-fit:cover;position:relative;z-index:2"><div class="master-photo-border"></div></div>';
                 }
-            })
-            .catch(function(e) { console.log('Contact error:', e); });
-    }
+            }
+        })
+        .catch(function(e) { console.log('Settings:', e); });
 
-    loadContent();
-
-    // ===== Firebase: Membership Form =====
+    // ===== FIREBASE: FORM =====
     var form = document.getElementById('membershipForm');
-    var formMsg = document.getElementById('formMessage');
-    var submitBtn = document.getElementById('submitBtn');
+    var fMsg = document.getElementById('formMessage');
+    var sBtn = document.getElementById('submitBtn');
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
+        sBtn.disabled = true;
+        sBtn.innerHTML = '<span class="btn-glow-bg"></span><i class="fas fa-spinner fa-spin"></i><span>ارسال...</span>';
 
         var data = {
             fullName: document.getElementById('fullName').value.trim(),
@@ -185,19 +167,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         db.collection('members').add(data)
             .then(function() {
-                formMsg.textContent = 'درخواست شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت.';
-                formMsg.className = 'form-msg success';
+                fMsg.textContent = 'درخواست ثبت شد! به زودی تماس می‌گیریم.';
+                fMsg.className = 'f-msg success';
                 form.reset();
             })
-            .catch(function(error) {
-                console.error('Error:', error);
-                formMsg.textContent = 'خطایی رخ داد. لطفاً با شماره تماس در ارتباط باشید.';
-                formMsg.className = 'form-msg error';
+            .catch(function(err) {
+                fMsg.textContent = 'خطا! لطفاً با شماره تماس بگیرید.';
+                fMsg.className = 'f-msg error';
             })
             .finally(function() {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ارسال درخواست عضویت';
-                setTimeout(function() { formMsg.className = 'form-msg'; }, 5000);
+                sBtn.disabled = false;
+                sBtn.innerHTML = '<span class="btn-glow-bg"></span><i class="fas fa-paper-plane"></i><span>ارسال درخواست</span>';
+                setTimeout(function() { fMsg.className = 'f-msg'; }, 5000);
             });
     });
 
