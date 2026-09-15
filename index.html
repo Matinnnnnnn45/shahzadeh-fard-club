@@ -3,277 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <meta name="description" content="باشگاه کاراته کیوکوشین ماتسوشیما شاهزاده فرد | استاد حسین شاهزاده | شاهین‌شهر">
     <title>باشگاه شیهان شاهزاده فرد | کاراته کیوکوشین ماتسوشیما</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon"><i class="fas fa-fist-raised"></i></div>
+            <div class="preloader-text">شیهان شاهزاده فرد</div>
+        </div>
+    </div>
+
     <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="container nav-container">
-            <a href="#hero" class="logo">
-                <span class="logo-icon"><i class="fas fa-fist-raised"></i></span>
-                <span class="logo-text">شیهان شاهزاده فرد</span>
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="#home" class="header-logo">
+                <span class="header-logo-icon"><i class="fas fa-fist-raised"></i></span>
+                <span class="header-logo-text">شاهزاده فرد</span>
             </a>
-            <button class="menu-toggle" id="menuToggle" aria-label="منو">
+            <nav class="header-nav" id="headerNav">
+                <a href="#home" class="header-nav-link active">خانه</a>
+                <a href="#about" class="header-nav-link">معرفی</a>
+                <a href="#master" class="header-nav-link">استاد</a>
+                <a href="#dojos" class="header-nav-link">dojoها</a>
+                <a href="#contact" class="header-nav-link">تماس</a>
+            </nav>
+            <button class="header-menu" id="headerMenu" aria-label="منو">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#hero">خانه</a></li>
-                <li><a href="#about">معرفی</a></li>
-                <li><a href="#master">استاد</a></li>
-                <li><a href="#schedule">برنامه تمرین</a></li>
-                <li><a href="#contact">تماس</a></li>
-            </ul>
         </div>
-    </nav>
+    </header>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <span class="mobile-nav-title"><i class="fas fa-fist-raised"></i> شاهزاده فرد</span>
+            <button class="mobile-nav-close" id="mobileNavClose"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="mobile-nav-links">
+            <a href="#home" class="mobile-nav-link">خانه</a>
+            <a href="#about" class="mobile-nav-link">معرفی</a>
+            <a href="#master" class="mobile-nav-link">استاد</a>
+            <a href="#dojos" class="mobile-nav-link">dojoها</a>
+            <a href="#contact" class="mobile-nav-link">تماس</a>
+        </nav>
+    </div>
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
 
     <!-- Hero -->
-    <section class="hero" id="hero">
-        <div class="hero-overlay"></div>
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
         <div class="hero-content">
-            <div class="hero-badge">کیوکوشین ماتسوشیما</div>
-            <h1>باشگاه شیهان<br>شاهزاده فرد</h1>
-            <p class="hero-subtitle">کاراته کیوکوشین ماتسوشیما — شاهین‌شهر</p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn btn-primary">عضویت در باشگاه</a>
-                <a href="#about" class="btn btn-outline">بیشتر بدانید</a>
+            <div class="hero-badge" id="heroBadge">کیوکوشین ماتسوشیما</div>
+            <h1 class="hero-title" id="heroTitle">باشگاه شیهان<br>شاهزاده فرد</h1>
+            <p class="hero-desc" id="heroDesc">کاراته کیوکوشین ماتسوشیما — شاهین‌شهر</p>
+            <div class="hero-btns">
+                <a href="#contact" class="btn btn-red">عضویت در باشگاه</a>
+                <a href="#about" class="btn btn-glass">بیشتر بدانید</a>
             </div>
         </div>
-        <div class="hero-stats">
-            <div class="stat-item">
-                <span class="stat-number">۲۰</span>
-                <span class="stat-label">سال سابقه</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">دان ۶</span>
-                <span class="stat-label">درجه استاد</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">قهرمان</span>
-                <span class="stat-label">جهان</span>
-            </div>
+        <div class="hero-scroll">
+            <span>اسکرول کنید</span>
+            <div class="hero-scroll-line"></div>
         </div>
     </section>
 
     <!-- About -->
-    <section class="section about" id="about">
+    <section class="section" id="about">
         <div class="container">
-            <div class="section-header">
+            <div class="section-title">
                 <span class="section-tag">درباره ما</span>
                 <h2>معرفی باشگاه</h2>
-                <div class="section-line"></div>
             </div>
-            <div class="about-grid">
-                <div class="about-content">
+            <div class="about-layout">
+                <div class="about-text" id="aboutText">
                     <h3>باشگاه کاراته کیوکوشین ماتسوشیما شاهزاده فرد</h3>
                     <p>باشگاه شیهان شاهزاده فرد وابسته به سبک کیوکوشین ماتسوشیما، در شهر شاهین‌شهر فعالیت می‌کند. این باشگاه زیر نظر استاد حسین شاهزاده، قهرمان جهان و دارنده کمربند دان ۶ کیوکوشین ماتسوشیما با بیش از ۲۰ سال سابقه تدریس، اداره می‌شود.</p>
                     <p>هدف ما تعلیم اصولی هنر رزمی کاراته کیوکوشین بر پایه انضباط، احترام و تلاش مستمر است. هنرجویان در این باشگاه نه‌تنها فنون رزمی را فرا می‌گیرند، بلکه روحیه جنگجویی و شخصیت خود را نیز تقویت می‌کنند.</p>
-                    <div class="about-features">
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>آموزش اصولی کیوکوشین ماتسوشیما</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>قهرمان جهان به عنوان سرمربی</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>۲۰ سال سابقه تدریس</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>۲ محل تمرین مجزا</span>
-                        </div>
+                </div>
+                <div class="about-image" id="aboutImage">
+                    <div class="about-img-placeholder">
+                        <i class="fas fa-fist-raised"></i>
+                        <span>تصویر باشگاه</span>
                     </div>
                 </div>
-                <div class="about-image">
-                    <div class="image-frame">
-                        <div class="image-placeholder">
-                            <i class="fas fa-fist-raised"></i>
-                            <p>کیوکوشین ماتسوشیما</p>
-                        </div>
-                    </div>
+            </div>
+            <div class="about-features">
+                <div class="about-feature">
+                    <div class="about-feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>کیوکوشین ماتسوشیما</h4>
+                    <p>آموزش اصولی و استاندارد سبک کیوکوشین</p>
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon"><i class="fas fa-trophy"></i></div>
+                    <h4>قهرمان جهان</h4>
+                    <p>سرمربی قهرمان مسابقات جهانی</p>
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon"><i class="fas fa-calendar-check"></i></div>
+                    <h4>۲۰ سال سابقه</h4>
+                    <p>بیش از دو دهه تجربه تدریس</p>
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h4>۲ محل تمرین</h4>
+                    <p>باشگاه ملت و باشگاه تختی</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Master -->
-    <section class="section master-section" id="master">
+    <section class="section section-dark" id="master">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">سرمربی</span>
+            <div class="section-title section-title-light">
+                <span class="section-tag section-tag-gold">سرمربی</span>
                 <h2>استاد حسین شاهزاده</h2>
-                <div class="section-line"></div>
             </div>
             <div class="master-card">
-                <div class="master-avatar">
-                    <i class="fas fa-medal"></i>
+                <div class="master-photo" id="masterPhoto">
+                    <div class="master-photo-placeholder">
+                        <i class="fas fa-medal"></i>
+                    </div>
                 </div>
                 <div class="master-info">
                     <h3>استاد حسین شاهزاده</h3>
-                    <span class="master-title">قهرمان جهان</span>
-                    <div class="master-details">
-                        <div class="master-detail">
-                            <i class="fas fa-belt"></i>
-                            <span>کمربند مشکی — دان ۶ کیوکوشین ماتسوشیما</span>
+                    <span class="master-badge">قهرمان جهان</span>
+                    <div class="master-stats">
+                        <div class="master-stat">
+                            <span class="master-stat-num">دان ۶</span>
+                            <span class="master-stat-label">کمربند مشکی</span>
                         </div>
-                        <div class="master-detail">
-                            <i class="fas fa-clock"></i>
-                            <span>بیش از ۲۰ سال سابقه تدریس و مسابقه</span>
+                        <div class="master-stat">
+                            <span class="master-stat-num">۲۰ سال</span>
+                            <span class="master-stat-label">سابقه تدریس</span>
                         </div>
-                        <div class="master-detail">
-                            <i class="fas fa-trophy"></i>
-                            <span>قهرمان مسابقات جهانی کیوکوشین</span>
-                        </div>
-                        <div class="master-detail">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>مدرس رسمی فدراسیون کیوکوشین ماتسوشیما</span>
+                        <div class="master-stat">
+                            <span class="master-stat-num">جهانی</span>
+                            <span class="master-stat-label">قهرمانی</span>
                         </div>
                     </div>
+                    <ul class="master-list">
+                        <li><i class="fas fa-check"></i> کمربند مشکی — دان ۶ کیوکوشین ماتسوشیما</li>
+                        <li><i class="fas fa-check"></i> بیش از ۲۰ سال سابقه تدریس و مسابقه</li>
+                        <li><i class="fas fa-check"></i> قهرمان مسابقات جهانی کیوکوشین</li>
+                        <li><i class="fas fa-check"></i> مدرس رسمی فدراسیون کیوکوشین ماتسوشیما</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Schedule -->
-    <section class="section schedule" id="schedule">
+    <!-- Dojos -->
+    <section class="section" id="dojos">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">برنامه هفتگی</span>
-                <h2>محل‌ها و برنامه تمرین</h2>
-                <div class="section-line"></div>
+            <div class="section-title">
+                <span class="section-tag">محل تمرین</span>
+                <h2>برنامه تمرین</h2>
             </div>
-            <div class="locations-grid">
-
+            <div class="dojos-grid" id="dojosGrid">
                 <!-- باشگاه ملت -->
-                <div class="location-card">
-                    <div class="location-header">
-                        <i class="fas fa-building"></i>
+                <div class="dojo-card">
+                    <div class="dojo-header">
+                        <div class="dojo-icon"><i class="fas fa-dumbbell"></i></div>
                         <h3>باشگاه ملت</h3>
                     </div>
-                    <div class="location-address">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>شاهین‌شهر، خیابان بهداری، باشگاه ملت، سالن کاراته</span>
-                    </div>
-                    <div class="location-schedule">
-                        <div class="schedule-row">
-                            <div class="schedule-day">
-                                <i class="fas fa-calendar-day"></i>
-                                <span>روزهای تمرین</span>
-                            </div>
-                            <div class="schedule-value">یکشنبه — سه‌شنبه — پنجشنبه</div>
+                    <div class="dojo-body">
+                        <div class="dojo-address">
+                            <i class="fas fa-location-dot"></i>
+                            <span>شاهین‌شهر، خیابان بهداری، باشگاه ملت، سالن کاراته</span>
                         </div>
-                        <div class="schedule-row">
-                            <div class="schedule-day">
-                                <i class="fas fa-clock"></i>
-                                <span>ساعت تمرین</span>
+                        <div class="dojo-info">
+                            <div class="dojo-info-row">
+                                <span class="dojo-info-label"><i class="fas fa-calendar-days"></i> روزها</span>
+                                <span class="dojo-info-value">یکشنبه — سه‌شنبه — پنجشنبه</span>
                             </div>
-                            <div class="schedule-value">۱۸:۳۰ تا ۲۰:۰۰</div>
+                            <div class="dojo-info-row">
+                                <span class="dojo-info-label"><i class="fas fa-clock"></i> ساعت</span>
+                                <span class="dojo-info-value">۱۸:۳۰ تا ۲۰:۰۰</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- باشگاه تختی -->
-                <div class="location-card">
-                    <div class="location-header">
-                        <i class="fas fa-building"></i>
+                <div class="dojo-card">
+                    <div class="dojo-header">
+                        <div class="dojo-icon"><i class="fas fa-dumbbell"></i></div>
                         <h3>باشگاه تختی</h3>
                     </div>
-                    <div class="location-address">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>شاهین‌شهر، خیابان مخابرات</span>
-                    </div>
-                    <div class="location-schedule">
-                        <div class="schedule-row">
-                            <div class="schedule-day">
-                                <i class="fas fa-calendar-day"></i>
-                                <span>روزهای تمرین</span>
-                            </div>
-                            <div class="schedule-value">یکشنبه — سه‌شنبه — پنجشنبه</div>
+                    <div class="dojo-body">
+                        <div class="dojo-address">
+                            <i class="fas fa-location-dot"></i>
+                            <span>شاهین‌شهر، خیابان مخابرات</span>
                         </div>
-                        <div class="schedule-row">
-                            <div class="schedule-day">
-                                <i class="fas fa-clock"></i>
-                                <span>ساعت تمرین</span>
+                        <div class="dojo-info">
+                            <div class="dojo-info-row">
+                                <span class="dojo-info-label"><i class="fas fa-calendar-days"></i> روزها</span>
+                                <span class="dojo-info-value">یکشنبه — سه‌شنبه — پنجشنبه</span>
                             </div>
-                            <div class="schedule-value">۲۰:۰۰ تا ۲۰:۴۵</div>
+                            <div class="dojo-info-row">
+                                <span class="dojo-info-label"><i class="fas fa-clock"></i> ساعت</span>
+                                <span class="dojo-info-value">۲۰:۰۰ تا ۲۰:۴۵</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Contact -->
-    <section class="section contact" id="contact">
+    <!-- Contact & Form -->
+    <section class="section section-dark" id="contact">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">ارتباط با ما</span>
+            <div class="section-title section-title-light">
+                <span class="section-tag section-tag-gold">ارتباط با ما</span>
                 <h2>تماس و عضویت</h2>
-                <div class="section-line"></div>
             </div>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-phone-alt"></i>
-                        <div>
-                            <h5>شماره تماس</h5>
-                            <p dir="ltr">+98 913 309 8749</p>
-                        </div>
+            <div class="contact-layout">
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <div class="contact-card-icon"><i class="fas fa-phone"></i></div>
+                        <h4>تلفن</h4>
+                        <p dir="ltr">+98 913 309 8749</p>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h5>محل فعالیت</h5>
-                            <p>شاهین‌شهر</p>
-                        </div>
+                    <div class="contact-card">
+                        <div class="contact-card-icon"><i class="fas fa-location-dot"></i></div>
+                        <h4>محل فعالیت</h4>
+                        <p>شاهین‌شهر</p>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-calendar-day"></i>
-                        <div>
-                            <h5>روزهای تمرین</h5>
-                            <p>یکشنبه، سه‌شنبه، پنجشنبه</p>
-                        </div>
+                    <div class="contact-card">
+                        <div class="contact-card-icon"><i class="fas fa-calendar-days"></i></div>
+                        <h4>روزهای تمرین</h4>
+                        <p>یکشنبه، سه‌شنبه، پنجشنبه</p>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <h5>ساعت تمرین</h5>
-                            <p>باشگاه ملت: ۱۸:۳۰ - ۲۰:۰۰</p>
-                            <p>باشگاه تختی: ۲۰:۰۰ - ۲۰:۴۵</p>
-                        </div>
+                    <div class="contact-card">
+                        <div class="contact-card-icon"><i class="fas fa-clock"></i></div>
+                        <h4>ساعت تمرین</h4>
+                        <p>ملت: ۱۸:۳۰ - ۲۰:۰۰</p>
+                        <p>تختی: ۲۰:۰۰ - ۲۰:۴۵</p>
                     </div>
                 </div>
-                <div class="contact-form-wrapper">
+                <div class="contact-form-box">
                     <h3>فرم عضویت</h3>
                     <form id="membershipForm">
-                        <div class="form-group">
-                            <input type="text" id="fullName" placeholder="نام و نام خانوادگی" required>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <input type="text" id="fullName" placeholder="نام و نام خانوادگی" required>
+                            </div>
+                            <div class="form-field">
+                                <input type="tel" id="phone" placeholder="شماره تماس" required dir="ltr">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="tel" id="phone" placeholder="شماره تماس" required dir="ltr">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <input type="number" id="age" placeholder="سن" required min="5" max="60">
+                            </div>
+                            <div class="form-field">
+                                <select id="location" required>
+                                    <option value="">انتخاب محل تمرین</option>
+                                    <option value="mellat">باشگاه ملت (۱۸:۳۰ - ۲۰:۰۰)</option>
+                                    <option value="takhti">باشگاه تختی (۲۰:۰۰ - ۲۰:۴۵)</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="number" id="age" placeholder="سن" required min="5" max="60">
-                        </div>
-                        <div class="form-group">
-                            <select id="location" required>
-                                <option value="">انتخاب محل تمرین</option>
-                                <option value="mellat">باشگاه ملت (۱۸:۳۰ - ۲۰:۰۰)</option>
-                                <option value="takhti">باشگاه تختی (۲۰:۰۰ - ۲۰:۴۵)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
+                        <div class="form-field">
                             <select id="experience">
                                 <option value="">سابقه ورزشی</option>
                                 <option value="none">بدون سابقه</option>
@@ -282,14 +281,14 @@
                                 <option value="advanced">پیشرفته (بیش از ۳ سال)</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-field">
                             <textarea id="message" rows="3" placeholder="پیام یا سوال شما"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-full">
+                        <button type="submit" class="btn btn-red btn-full" id="submitBtn">
                             <i class="fas fa-paper-plane"></i> ارسال درخواست عضویت
                         </button>
                     </form>
-                    <div id="formMessage" class="form-message"></div>
+                    <div id="formMessage" class="form-msg"></div>
                 </div>
             </div>
         </div>
@@ -297,41 +296,30 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4><i class="fas fa-fist-raised"></i> شیهان شاهزاده فرد</h4>
-                    <p>باشگاه کاراته کیوکوشین ماتسوشیما — شاهین‌شهر<br>زیر نظر استاد حسین شاهزاده، قهرمان جهان</p>
-                </div>
-                <div class="footer-col">
-                    <h4>دسترسی سریع</h4>
-                    <ul>
-                        <li><a href="#about">معرفی</a></li>
-                        <li><a href="#master">استاد</a></li>
-                        <li><a href="#schedule">برنامه تمرین</a></li>
-                        <li><a href="#contact">تماس</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>تماس با ما</h4>
-                    <ul>
-                        <li><i class="fas fa-phone-alt"></i> +98 913 309 8749</li>
-                        <li><i class="fas fa-map-marker-alt"></i> شاهین‌شهر</li>
-                    </ul>
-                </div>
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo"><i class="fas fa-fist-raised"></i> شاهزاده فرد</span>
+                <p>باشگاه کاراته کیوکوشین ماتسوشیما — شاهین‌شهر<br>زیر نظر استاد حسین شاهزاده، قهرمان جهان</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; ۱۴۰۵ باشگاه شیهان شاهزاده فرد — تمامی حقوق محفوظ است</p>
+            <div class="footer-links">
+                <h4>دسترسی سریع</h4>
+                <a href="#about">معرفی</a>
+                <a href="#master">استاد</a>
+                <a href="#dojos">برنامه تمرین</a>
+                <a href="#contact">تماس</a>
             </div>
+            <div class="footer-contact">
+                <h4>تماس</h4>
+                <p><i class="fas fa-phone"></i> +98 913 309 8749</p>
+                <p><i class="fas fa-location-dot"></i> شاهین‌شهر</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; ۱۴۰۵ باشگاه شیهان شاهزاده فرد</p>
         </div>
     </footer>
 
-    <!-- Back to Top -->
-    <button class="back-to-top" id="backToTop" aria-label="بازگشت به بالا">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <!-- Firebase SDK -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <script src="js/firebase-config.js"></script>
